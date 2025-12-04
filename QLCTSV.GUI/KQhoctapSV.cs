@@ -152,6 +152,39 @@ namespace QLCTSV.GUI
                 label_hocBong.Text = hb;
                 panel_hocBong.BackColor = Color.HotPink; // Màu nổi bật cho học bổng
             }
+
+            // 5. Kỷ Luật
+            if (kq.DanhSachKyLuat == null || kq.DanhSachKyLuat.Count == 0)
+            {
+                // Tốt: Không bị kỷ luật
+                label_kyLuat.Text = "Không có ghi nhận kỷ luật nào.";
+                panel_kyLuat.BackColor = Color.SeaGreen; // Màu xanh an toàn
+            }
+            else
+            {
+                // Xấu: Có kỷ luật -> Duyệt danh sách để hiển thị
+                string noiDungViPham = "";
+
+                foreach (var kl in kq.DanhSachKyLuat)
+                {
+                    // Format ngày cho đẹp (chỉ lấy dd/MM/yyyy)
+                    string ngayDep = "";
+                    if (DateTime.TryParse(kl.NgayQuyetDinh, out DateTime dateVal))
+                    {
+                        ngayDep = dateVal.ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        ngayDep = kl.NgayQuyetDinh; // Giữ nguyên nếu không parse được
+                    }
+
+                    // Format hiển thị: "- Cảnh cáo học vụ (04/12/2025): ngu"
+                    noiDungViPham += $"- {kl.HinhThuc} ({ngayDep}): {kl.LyDo}\n";
+                }
+
+                label_kyLuat.Text = noiDungViPham.Trim(); // Xóa xuống dòng thừa ở cuối
+                panel_kyLuat.BackColor = Color.OrangeRed; // Màu đỏ cảnh báo
+            }
         }
     }
 }

@@ -102,7 +102,7 @@
             this.button_xem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_xem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_xem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_xem.Location = new System.Drawing.Point(884, 503);
+            this.button_xem.Location = new System.Drawing.Point(885, 503);
             this.button_xem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_xem.Name = "button_xem";
             this.button_xem.Size = new System.Drawing.Size(223, 59);
@@ -244,7 +244,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(403, 443);
+            this.label7.Location = new System.Drawing.Point(306, 456);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(66, 23);
             this.label7.TabIndex = 40;
@@ -254,9 +254,9 @@
             // 
             this.panel_kyLuat.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.panel_kyLuat.Controls.Add(this.label_kyLuat);
-            this.panel_kyLuat.Location = new System.Drawing.Point(407, 469);
+            this.panel_kyLuat.Location = new System.Drawing.Point(310, 482);
             this.panel_kyLuat.Name = "panel_kyLuat";
-            this.panel_kyLuat.Size = new System.Drawing.Size(324, 80);
+            this.panel_kyLuat.Size = new System.Drawing.Size(507, 80);
             this.panel_kyLuat.TabIndex = 39;
             // 
             // label_kyLuat
