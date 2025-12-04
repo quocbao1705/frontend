@@ -73,6 +73,7 @@ namespace QLCTSV.GUI
 
                     if (dataGridView1.Columns["MaSV"] != null) dataGridView1.Columns["MaSV"].HeaderText = "Mã SV";
                     if (dataGridView1.Columns["HoTen"] != null) dataGridView1.Columns["HoTen"].HeaderText = "Họ Tên";
+                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi load SV: " + ex.Message); }
@@ -111,6 +112,7 @@ namespace QLCTSV.GUI
             if (dataGridView2.Columns["HinhThuc"] != null) dataGridView2.Columns["HinhThuc"].HeaderText = "Hình Thức";
             if (dataGridView2.Columns["LyDo"] != null) dataGridView2.Columns["LyDo"].HeaderText = "Lý Do";
             if (dataGridView2.Columns["NgayQuyetDinh"] != null) dataGridView2.Columns["NgayQuyetDinh"].HeaderText = "Ngày Quyết Định";
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         // ==========================================================
