@@ -115,5 +115,11 @@ namespace QLCTSV.GUI
         {
 
         }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            dataGridView1.ReadOnly = true;
+        }
     }
 }

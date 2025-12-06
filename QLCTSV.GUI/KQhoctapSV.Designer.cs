@@ -47,14 +47,12 @@
             this.panel_hocBong = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.panel_kyLuat = new System.Windows.Forms.Panel();
-            this.label_kyLuat = new System.Windows.Forms.Label();
+            this.richTextBox_kyLuat = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.panel_gpa.SuspendLayout();
             this.panel_drl.SuspendLayout();
             this.panel_hocLuc.SuspendLayout();
             this.panel_hocBong.SuspendLayout();
-            this.panel_kyLuat.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox_namhoc
@@ -250,32 +248,26 @@
             this.label7.TabIndex = 40;
             this.label7.Text = "Kỷ luật";
             // 
-            // panel_kyLuat
+            // richTextBox_kyLuat
             // 
-            this.panel_kyLuat.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.panel_kyLuat.Controls.Add(this.label_kyLuat);
-            this.panel_kyLuat.Location = new System.Drawing.Point(310, 482);
-            this.panel_kyLuat.Name = "panel_kyLuat";
-            this.panel_kyLuat.Size = new System.Drawing.Size(507, 80);
-            this.panel_kyLuat.TabIndex = 39;
-            // 
-            // label_kyLuat
-            // 
-            this.label_kyLuat.AutoSize = true;
-            this.label_kyLuat.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_kyLuat.Location = new System.Drawing.Point(25, 27);
-            this.label_kyLuat.Name = "label_kyLuat";
-            this.label_kyLuat.Size = new System.Drawing.Size(178, 23);
-            this.label_kyLuat.TabIndex = 32;
-            this.label_kyLuat.Text = "THÔNG TIN KỶ LUẬT";
+            this.richTextBox_kyLuat.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.richTextBox_kyLuat.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox_kyLuat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_kyLuat.Location = new System.Drawing.Point(310, 491);
+            this.richTextBox_kyLuat.Name = "richTextBox_kyLuat";
+            this.richTextBox_kyLuat.ReadOnly = true;
+            this.richTextBox_kyLuat.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.richTextBox_kyLuat.Size = new System.Drawing.Size(507, 104);
+            this.richTextBox_kyLuat.TabIndex = 41;
+            this.richTextBox_kyLuat.Text = "";
             // 
             // KQhoctapSV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 623);
+            this.Controls.Add(this.richTextBox_kyLuat);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.panel_kyLuat);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -300,8 +292,6 @@
             this.panel_hocLuc.PerformLayout();
             this.panel_hocBong.ResumeLayout(false);
             this.panel_hocBong.PerformLayout();
-            this.panel_kyLuat.ResumeLayout(false);
-            this.panel_kyLuat.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,7 +317,6 @@
         private System.Windows.Forms.Panel panel_hocBong;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Panel panel_kyLuat;
-        private System.Windows.Forms.Label label_kyLuat;
+        private System.Windows.Forms.RichTextBox richTextBox_kyLuat;
     }
 }

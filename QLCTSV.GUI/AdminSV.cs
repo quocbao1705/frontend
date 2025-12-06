@@ -51,6 +51,8 @@ namespace QLCTSV.GUI
                     dataGridView1.Columns["MaSV"].HeaderText = "Mã sinh viên";
                     dataGridView1.Columns["HoTen"].HeaderText = "Họ và Tên";
                     dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    dateTimePicker_date.Format = DateTimePickerFormat.Custom;
+                    dateTimePicker_date.CustomFormat = "dd/MM/yyyy";
                 }
                 else
                 {
@@ -78,12 +80,14 @@ namespace QLCTSV.GUI
         }
         private SinhVienDTO GetSinhVienFromUI()
         {
+            DateTime rawDate = dateTimePicker_date.Value.Date;
+            DateTime fixDate = DateTime.SpecifyKind(rawDate, DateTimeKind.Utc);
             return new SinhVienDTO()
             {
 
                 MaSV = textBox_MaSV.Text.Trim(),
                 HoTen = textBox_Ten.Text.Trim(),
-                NgaySinh = dateTimePicker_date.Value,
+                NgaySinh = fixDate,
                 GioiTinh = comboBox_GT.Text.Trim(),
                 DiaChi = textBox_diaChi.Text.Trim(),
                 SoDienThoai = textBox_Sdt.Text.Trim()
@@ -235,6 +239,7 @@ namespace QLCTSV.GUI
 
             comboBox_GT.Text = row.Cells["GioiTinh"].Value?.ToString();
 
+            dataGridView1.ReadOnly = true;
             // Khóa Mã SV để tránh sửa nhầm Primary Key
             textBox_MaSV.Enabled = false;
         }

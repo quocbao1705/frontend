@@ -123,8 +123,9 @@
             // dateTimePicker_date
             // 
             this.dateTimePicker_date.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.dateTimePicker_date.CustomFormat = "dd/MM/yyyy";
             this.dateTimePicker_date.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker_date.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker_date.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker_date.Location = new System.Drawing.Point(173, 102);
             this.dateTimePicker_date.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateTimePicker_date.Name = "dateTimePicker_date";
@@ -274,6 +275,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(591, 112);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 62;
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;

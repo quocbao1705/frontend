@@ -30,7 +30,6 @@ namespace QLCTSV.GUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.Label_QLKL = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox_lyDo = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -56,18 +55,6 @@ namespace QLCTSV.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Label_QLKL
-            // 
-            this.Label_QLKL.AutoSize = true;
-            this.Label_QLKL.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_QLKL.ForeColor = System.Drawing.Color.Red;
-            this.Label_QLKL.Location = new System.Drawing.Point(34, 9);
-            this.Label_QLKL.Name = "Label_QLKL";
-            this.Label_QLKL.Size = new System.Drawing.Size(243, 41);
-            this.Label_QLKL.TabIndex = 21;
-            this.Label_QLKL.Text = "Quản Lý Kỷ Luật";
-            this.Label_QLKL.Click += new System.EventHandler(this.Label_Chung_Click);
             // 
             // groupBox1
             // 
@@ -336,7 +323,6 @@ namespace QLCTSV.GUI
             this.Controls.Add(this.button_sua);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.button_them);
-            this.Controls.Add(this.Label_QLKL);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -369,8 +355,6 @@ namespace QLCTSV.GUI
         }
 
         #endregion
-
-        private System.Windows.Forms.Label Label_QLKL;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboBox_namhoc;
