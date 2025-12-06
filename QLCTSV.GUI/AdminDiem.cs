@@ -28,103 +28,87 @@ namespace QLCTSV.GUI
 
         }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
 
         private void AdminDiem_Load(object sender, EventArgs e)
         {
             LoadTheme();
             SetupComboBox();
-            LoadData();
+            LoadDSDiem();
+            LoadDSSinhVien();
+            SetupDataGridView();
+        }
+        private void SetupDataGridView()
+        {
+            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView2.MultiSelect = false;
+            dataGridView2.ReadOnly = true;
         }
         private void SetupComboBox()
         {
             if (comboBox_hocKy.Items.Count == 0)
             {
                 comboBox_hocKy.Items.AddRange(new string[] { "1", "2", "3" });
-                comboBox_hocKy.SelectedIndex = 0; // Chọn mặc định HK 1
+                comboBox_hocKy.SelectedIndex = 0;
             }
             // Thêm dữ liệu mẫu cho Năm học nếu chưa có
             if (comboBox_Namhoc.Items.Count == 0)
             {
                 comboBox_Namhoc.Items.AddRange(new string[] { "2023-2024", "2024-2025", "2025-2026", "2026-2027" });
+                comboBox_Namhoc.SelectedIndex = 0;
             }
+
         }
-        private async void LoadData()
+        private async void LoadDSSinhVien()
         {
             try
             {
-                // Gọi API lấy danh sách điểm
+                string url = baseUrl + "api/ctsv/danh-sach-sinh-vien";
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    var listSV = JsonConvert.DeserializeObject<List<SinhVienDTO>>(json);
+                    dataGridView1.DataSource = listSV;
+
+                    if (dataGridView1.Columns["MaSV"] != null) dataGridView1.Columns["MaSV"].HeaderText = "Mã SV";
+                    if (dataGridView1.Columns["HoTen"] != null) dataGridView1.Columns["HoTen"].HeaderText = "Họ Tên";
+                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("Lỗi load SV: " + ex.Message); }
+        }
+        private async void LoadDSDiem()
+        {
+            // Reset grid để tránh lỗi hiển thị
+            dataGridView2.DataSource = null;
+            try
+            {
                 string url = baseUrl + "api/ctsv/danh-sach-diem-sinh-vien";
                 HttpResponseMessage response = await client.GetAsync(url);
-
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonContent = await response.Content.ReadAsStringAsync();
                     List<ThemDiemDTO> listDiem = JsonConvert.DeserializeObject<List<ThemDiemDTO>>(jsonContent);
-                    var sortedList = listDiem.OrderBy(x => x.MaSV)
-                         .ThenBy(x => x.NamHoc)
-                         .ThenBy(x => x.HocKy)
-                         .ToList();
-
-                    dataGridView1.DataSource = sortedList;
-
-                    // Đặt tên cột tiếng Việt
-                    if (dataGridView1.Columns["MaSV"] != null) dataGridView1.Columns["MaSV"].HeaderText = "Mã SV";
-                    if (dataGridView1.Columns["HocKy"] != null) dataGridView1.Columns["HocKy"].HeaderText = "Học Kỳ";
-                    if (dataGridView1.Columns["NamHoc"] != null) dataGridView1.Columns["NamHoc"].HeaderText = "Năm Học";
-                    if (dataGridView1.Columns["DiemRenLuyen"] != null) dataGridView1.Columns["DiemRenLuyen"].HeaderText = "ĐRL";
-                    if (dataGridView1.Columns["XepLoaiHocLuc"] != null) dataGridView1.Columns["XepLoaiHocLuc"].HeaderText = "Xếp Loại";
-                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                }
-                else
-                {
-                    MessageBox.Show("Không thể tải dữ liệu điểm: " + response.ReasonPhrase);
+                    dataGridView2.DataSource = listDiem;
+                    FormatGridDiem();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi kết nối: " + ex.Message);
-            }
+            catch (Exception ex) { MessageBox.Show("Lỗi load Kỷ luật: " + ex.Message); }
         }
-        
-        private ThemDiemDTO GetDiemFromUI()
+        private void FormatGridDiem()
         {
-            // 1. Xử lý GPA
-            double gpa = 0;
-            string gpaText = textBox_GPA.Text.Replace(',', '.');
-            if (!double.TryParse(gpaText, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out gpa))
+            if (dataGridView2.Columns["Id"] != null) dataGridView2.Columns["Id"].Visible = false;
+            // Ẩn bớt các cột không cần thiết...
+            if (dataGridView2.Columns["MaSV"] != null) dataGridView2.Columns["MaSV"].HeaderText = "Mã SV";
+            if (dataGridView2.Columns["HoTen"] != null)
             {
-                gpa = 0;
+                dataGridView2.Columns["HoTen"].Visible = true;
+                dataGridView2.Columns["HoTen"].HeaderText = "Họ và Tên";
+                dataGridView2.Columns["HoTen"].DisplayIndex = 2;
             }
-            // Giới hạn
-            if (gpa > 4.0) gpa = 4.0;
-            if (gpa < 0) gpa = 0;
-
-            // 2. Xử lý ĐRL
-            if (!int.TryParse(textBox_Drl.Text, out int drl)) drl = 0;
-            if (drl > 100) drl = 100;
-            if (drl < 0) drl = 0;
-
-            return new ThemDiemDTO()
-            {
-                MaSV = textBox_MaSV.Text.Trim(),
-                HocKy = comboBox_hocKy.Text.Trim(),
-                NamHoc = comboBox_Namhoc.Text.Trim(),
-                GPA = gpa,
-                DiemRenLuyen = drl,
-
-                // Không cần gửi xếp loại, Backend sẽ ghi đè cái này
-                XepLoaiHocLuc = ""
-            };
+            if (dataGridView2.Columns["DiemRenLuyen"] != null) dataGridView2.Columns["DiemRenLuyen"].HeaderText = "ĐRL";
+            if (dataGridView2.Columns["XepLoaiHocLuc"] != null) dataGridView2.Columns["XepLoaiHocLuc"].HeaderText = "Xếp Loại";
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
         private void LoadTheme()
         {
@@ -145,31 +129,78 @@ namespace QLCTSV.GUI
         private void button_lammoi_Click(object sender, EventArgs e)
         {
             textBox_MaSV.Clear();
-            comboBox_Namhoc.SelectedIndex = -1;
             textBox_GPA.Clear();
             textBox_Drl.Clear();
 
             // Mở khóa lại các ô quan trọng
             textBox_MaSV.Enabled = true;
-            comboBox_hocKy.Enabled = true;
-            comboBox_Namhoc.Enabled = true;
+            dataGridView2.ClearSelection();
+            dataGridView1.ClearSelection();
         }
+        private ThemDiemDTO GetDiemFromUI()
+        {
+            // --- Xử lý GPA ---
+            double gpa = 0;
+            string gpaText = textBox_GPA.Text.Replace(',', '.');
 
+            // Kiểm tra có phải là số không
+            if (!double.TryParse(gpaText, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out gpa))
+            {
+                MessageBox.Show("Điểm GPA không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            // Kiểm tra khoảng giá trị (Yêu cầu của bạn)
+            if (gpa < 0 || gpa > 4.0)
+            {
+                MessageBox.Show("Điểm GPA phải nằm trong khoảng 0 - 4.0", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null; // Trả về null để nút Thêm dừng lại
+            }
+
+            // --- Xử lý ĐRL ---
+            if (!int.TryParse(textBox_Drl.Text, out int drl))
+            {
+                MessageBox.Show("Điểm rèn luyện không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            if (drl < 0 || drl > 100)
+            {
+                MessageBox.Show("Điểm rèn luyện phải nằm trong khoảng 0 - 100", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            return new ThemDiemDTO()
+            {
+                MaSV = textBox_MaSV.Text.Trim(),
+                HocKy = comboBox_hocKy.Text.Trim(),
+                NamHoc = comboBox_Namhoc.Text.Trim(),
+                GPA = gpa,
+                DiemRenLuyen = drl,
+                XepLoaiHocLuc = ""
+            };
+        }
         private async void button_them_Click(object sender, EventArgs e)
         {
-            if (textBox_MaSV.Enabled == false)
+            // 1. Chỉ kiểm tra xem đã có mã sinh viên chưa (Không quan tâm Enabled hay Disabled)
+            if (string.IsNullOrEmpty(textBox_MaSV.Text))
             {
-                MessageBox.Show("Vui lòng bấm 'Hủy chọn' trước khi thêm mới.");
+                MessageBox.Show("Vui lòng chọn Sinh viên từ bảng dưới hoặc nhập Mã SV!");
                 return;
             }
 
             try
             {
+                // 2. Gọi hàm lấy dữ liệu (Hàm này đã có Validation GPA/ĐRL bên dưới)
                 ThemDiemDTO diem = GetDiemFromUI();
-                var currentList = dataGridView1.DataSource as List<ThemDiemDTO>;
+
+                // Nếu hàm GetDiemFromUI trả về null (do nhập sai), thì dừng lại
+                if (diem == null) return;
+
+                // 3. Kiểm tra trùng lặp (Giữ nguyên logic cũ của bạn)
+                var currentList = dataGridView2.DataSource as List<ThemDiemDTO>;
                 if (currentList != null)
                 {
-                    // Kiểm tra xem có dòng nào trùng khớp cả 3 thông tin không
                     bool isDuplicate = currentList.Any(x =>
                         x.MaSV.ToLower() == diem.MaSV.ToLower() &&
                         x.HocKy.ToLower() == diem.HocKy.ToLower() &&
@@ -179,17 +210,11 @@ namespace QLCTSV.GUI
                     {
                         MessageBox.Show($"Sinh viên {diem.MaSV} đã có điểm của {diem.HocKy}, năm {diem.NamHoc}.\nVui lòng chọn dòng đó và bấm 'Sửa' nếu muốn thay đổi.",
                             "Trùng dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return; // Dừng lại, không gửi API nữa
+                        return;
                     }
                 }
 
-                // Validate cơ bản
-                if (string.IsNullOrEmpty(diem.MaSV) || string.IsNullOrEmpty(diem.HocKy))
-                {
-                    MessageBox.Show("Vui lòng nhập Mã SV và Học kỳ.");
-                    return;
-                }
-
+                // 4. Gọi API Thêm
                 string json = JsonConvert.SerializeObject(diem);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -198,7 +223,7 @@ namespace QLCTSV.GUI
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Nhập điểm thành công!");
-                    LoadData();
+                    LoadDSDiem(); // Tải lại bảng điểm
                     button_lammoi_Click(sender, e); // Reset form
                 }
                 else
@@ -212,9 +237,11 @@ namespace QLCTSV.GUI
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
+        
 
         private async void button_sua_Click(object sender, EventArgs e)
         {
+            // Kiểm tra chưa nhập mã sinh viên
             if (string.IsNullOrEmpty(textBox_MaSV.Text))
             {
                 MessageBox.Show("Vui lòng chọn sinh viên cần sửa điểm.");
@@ -224,19 +251,21 @@ namespace QLCTSV.GUI
             try
             {
                 ThemDiemDTO diem = GetDiemFromUI();
+                if (diem == null) return;
                 string json = JsonConvert.SerializeObject(diem);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                // API Update: api/ctsv/update-diem/{maSV}
-                // Lưu ý: Logic backend của bạn cần xử lý việc update đúng kỳ/năm học dựa trên body gửi lên
-                string url = baseUrl + "api/ctsv/update-diem/" + diem.MaSV;
+                // Gọi API Update
+                // Sử dụng Uri.EscapeDataString để đảm bảo mã SV an toàn trong URL
+                string url = baseUrl + $"api/ctsv/update-diem/{Uri.EscapeDataString(diem.MaSV)}";
 
                 HttpResponseMessage response = await client.PutAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Cập nhật điểm thành công!");
-                    LoadData();
+                    LoadDSDiem(); // Tải lại bảng để thấy Xếp loại mới do Backend tính
+                    button_lammoi_Click(sender, e);
                 }
                 else
                 {
@@ -252,50 +281,33 @@ namespace QLCTSV.GUI
 
         private async void button_xoa_Click(object sender, EventArgs e)
         {
-            // 1. Kiểm tra đã chọn dòng chưa
-            if (textBox_MaSV.Enabled == true || string.IsNullOrEmpty(textBox_MaSV.Text))
+            // 1. Kiểm tra chọn dòng trực tiếp từ GridView
+            if (dataGridView2.CurrentRow == null || dataGridView2.CurrentRow.Index < 0)
             {
-                MessageBox.Show("Vui lòng chọn dòng điểm cần xóa từ danh sách.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn dòng cần xóa ở bảng Danh Sách Điểm!");
                 return;
             }
 
-            string maSV = textBox_MaSV.Text.Trim();
-            string hocKy = comboBox_hocKy.Text.Trim();
-            string namHoc = comboBox_Namhoc.Text.Trim();
+            DataGridViewRow selectedRow = dataGridView2.CurrentRow;
+            if (selectedRow.Cells["Id"].Value == null) return;
 
-            var confirm = MessageBox.Show($"Bạn có chắc chắn muốn xóa điểm của {maSV}?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            // Lấy ID trực tiếp
+            int idCanXoa = int.Parse(selectedRow.Cells["Id"].Value.ToString());
 
-            if (confirm == DialogResult.Yes)
+            DialogResult dialog = MessageBox.Show("Bạn có chắc chắn muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (dialog == DialogResult.Yes)
             {
                 try
                 {
-                    // --- SỬA LỖI 415 TẠI ĐÂY ---
-
-                    // Bước 1: Tạo đối tượng chứa dữ liệu cần xóa
-                    // (Tên biến phải khớp với DTO bên Backend mong đợi)
-                    var deleteData = new
-                    {
-                        MaSV = maSV,
-                        HocKy = hocKy,
-                        NamHoc = namHoc
-                    };
-
-                    // Bước 2: Tạo Request Message thủ công để có thể gắn Body vào DELETE
-                    var request = new HttpRequestMessage
-                    {
-                        Method = HttpMethod.Delete,
-                        RequestUri = new Uri(baseUrl + "api/ctsv/Delete-scores"),
-                        // Đóng gói dữ liệu thành JSON
-                        Content = new StringContent(JsonConvert.SerializeObject(deleteData), Encoding.UTF8, "application/json")
-                    };
-
-                    // Bước 3: Gửi Request bằng SendAsync
-                    HttpResponseMessage response = await client.SendAsync(request);
+                    // URL Xóa
+                    string url = baseUrl + $"api/ctsv/diem/{idCanXoa}";
+                    HttpResponseMessage response = await client.DeleteAsync(url);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Xóa điểm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadData();
+                        MessageBox.Show("Xóa thành công!");
+                        LoadDSDiem(); // Tải lại bảng để thấy Xếp loại mới do Backend tính
                         button_lammoi_Click(sender, e);
                     }
                     else
@@ -306,25 +318,37 @@ namespace QLCTSV.GUI
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi hệ thống: " + ex.Message);
+                    MessageBox.Show("Lỗi: " + ex.Message);
                 }
             }
         }
 
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+
+        private void dataGridView1_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-
             DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
-            textBox_MaSV.Text = row.Cells["MaSV"].Value?.ToString();
+            textBox_MaSV.Text = row.Cells["MaSV"].Value?.ToString().Trim();
+            textBox_MaSV.Enabled = false; // Khóa lại
+            dataGridView1.ReadOnly = true;
+            // Reset các ô nhập liệu khác để nhập mới
+            textBox_GPA.Clear();
+            textBox_Drl.Clear();
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            DataGridViewRow row = dataGridView2.Rows[e.RowIndex];
+
+            // Đổ dữ liệu lên TextBox để người dùng sửa
+            textBox_MaSV.Text = row.Cells["MaSV"].Value?.ToString().Trim();
+            textBox_MaSV.Enabled = false;
+            textBox_GPA.Text = row.Cells["GPA"].Value?.ToString();
             comboBox_hocKy.Text = row.Cells["HocKy"].Value?.ToString();
             comboBox_Namhoc.Text = row.Cells["NamHoc"].Value?.ToString();
-            textBox_GPA.Text = row.Cells["GPA"].Value?.ToString();
             textBox_Drl.Text = row.Cells["DiemRenLuyen"].Value?.ToString();
-
-            // Khi sửa điểm, KHÔNG ĐƯỢC sửa Mã SV, Học Kỳ, Năm Học
-            textBox_MaSV.Enabled = false;
         }
     }
 }

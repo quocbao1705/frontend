@@ -8,6 +8,7 @@ namespace QLCTSV.DTO.AdminDTO
 {
     public class ThemDiemDTO
     {
+        public int Id { get; set; }
         public string MaSV { get; set; }
         public string HocKy { get; set; }
         public string NamHoc { get; set; }

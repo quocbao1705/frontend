@@ -61,14 +61,13 @@ namespace QLCTSV.GUI
             label_drl.Text = "--";
             label_hocLuc.Text = "---";
             label_hocBong.Text = "---";
-            label_kyLuat.Text = "---";
 
             // Màu mặc định
+            richTextBox_kyLuat.BackColor = Color.Gray;
             panel_gpa.BackColor = Color.Gray;
             panel_drl.BackColor = Color.Gray;
             panel_hocLuc.BackColor = Color.Gray;
             panel_hocBong.BackColor = Color.Gray;
-            panel_kyLuat.BackColor = Color.Gray;
         }
 
         private async void button_xem_Click(object sender, EventArgs e)
@@ -157,8 +156,7 @@ namespace QLCTSV.GUI
             if (kq.DanhSachKyLuat == null || kq.DanhSachKyLuat.Count == 0)
             {
                 // Tốt: Không bị kỷ luật
-                label_kyLuat.Text = "Không có ghi nhận kỷ luật nào.";
-                panel_kyLuat.BackColor = Color.SeaGreen; // Màu xanh an toàn
+                richTextBox_kyLuat.BackColor = Color.SeaGreen; // Màu xanh an toàn
             }
             else
             {
@@ -182,8 +180,10 @@ namespace QLCTSV.GUI
                     noiDungViPham += $"- {kl.HinhThuc} ({ngayDep}): {kl.LyDo}\n";
                 }
 
-                label_kyLuat.Text = noiDungViPham.Trim(); // Xóa xuống dòng thừa ở cuối
-                panel_kyLuat.BackColor = Color.OrangeRed; // Màu đỏ cảnh báo
+                richTextBox_kyLuat.Text = noiDungViPham.Trim();
+                richTextBox_kyLuat.BackColor = Color.OrangeRed; // Đổi màu nền
+                richTextBox_kyLuat.ForeColor = Color.White;
+                richTextBox_kyLuat.ReadOnly = true;
             }
         }
     }

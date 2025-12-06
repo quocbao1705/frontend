@@ -73,6 +73,7 @@ namespace QLCTSV.GUI
 
                     if (dataGridView1.Columns["MaSV"] != null) dataGridView1.Columns["MaSV"].HeaderText = "Mã SV";
                     if (dataGridView1.Columns["HoTen"] != null) dataGridView1.Columns["HoTen"].HeaderText = "Họ Tên";
+                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi load SV: " + ex.Message); }
@@ -111,6 +112,7 @@ namespace QLCTSV.GUI
             if (dataGridView2.Columns["HinhThuc"] != null) dataGridView2.Columns["HinhThuc"].HeaderText = "Hình Thức";
             if (dataGridView2.Columns["LyDo"] != null) dataGridView2.Columns["LyDo"].HeaderText = "Lý Do";
             if (dataGridView2.Columns["NgayQuyetDinh"] != null) dataGridView2.Columns["NgayQuyetDinh"].HeaderText = "Ngày Quyết Định";
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         // ==========================================================
@@ -125,7 +127,7 @@ namespace QLCTSV.GUI
 
             textBox_MaSV.Text = row.Cells["MaSV"].Value?.ToString().Trim();
             textBox_MaSV.Enabled = false; // Khóa lại
-
+            dataGridView1.ReadOnly = true;
             // Reset các ô nhập liệu khác để nhập mới
             comboBox_hinhthuc.SelectedIndex = -1;
             textBox_lyDo.Clear();
@@ -145,6 +147,7 @@ namespace QLCTSV.GUI
             comboBox_hocKy.Text = row.Cells["HocKy"].Value?.ToString();
             comboBox_namhoc.Text = row.Cells["NamHoc"].Value?.ToString();
 
+            dataGridView1.ReadOnly = true;
             if (DateTime.TryParse(row.Cells["NgayQuyetDinh"].Value?.ToString(), out DateTime date))
             {
                 dateTimePicker_date.Value = date;
@@ -332,6 +335,21 @@ namespace QLCTSV.GUI
             dataGridView1.ClearSelection();
         }
 
-        private void LoadTheme() { }
+        private void LoadTheme()
+        {
+            foreach (Control btns in this.Controls)
+            {
+                if (btns.GetType() == typeof(Button))
+                {
+                    Button btn = (Button)btns;
+                    btn.BackColor = ThemeColor.PrimaryColor;
+                    btn.ForeColor = Color.White;
+                    btn.FlatAppearance.BorderColor = ThemeColor.SecondaryColor;
+                }
+            }
+            label_HTKL.ForeColor = ThemeColor.PrimaryColor;
+            if (label_HTKL != null) label_HTKL.ForeColor = ThemeColor.PrimaryColor;
+            if (label_DSSV != null) label_DSSV.ForeColor = ThemeColor.PrimaryColor;
+        }
     }
 }

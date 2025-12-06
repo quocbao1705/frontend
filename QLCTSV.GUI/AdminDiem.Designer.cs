@@ -40,13 +40,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_MaSV = new System.Windows.Forms.TextBox();
             this.Label_Chung = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button_xoa = new System.Windows.Forms.Button();
             this.button_sua = new System.Windows.Forms.Button();
             this.button_them = new System.Windows.Forms.Button();
             this.button_lammoi = new System.Windows.Forms.Button();
+            this.label_DSSV = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -62,11 +65,11 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBox_MaSV);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 99);
+            this.groupBox1.Location = new System.Drawing.Point(40, 32);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(512, 277);
+            this.groupBox1.Size = new System.Drawing.Size(521, 277);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông Tin ĐRL";
@@ -176,35 +179,18 @@
             this.Label_Chung.AutoSize = true;
             this.Label_Chung.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label_Chung.ForeColor = System.Drawing.Color.Red;
-            this.Label_Chung.Location = new System.Drawing.Point(569, 54);
+            this.Label_Chung.Location = new System.Drawing.Point(581, 32);
             this.Label_Chung.Name = "Label_Chung";
-            this.Label_Chung.Size = new System.Drawing.Size(245, 45);
+            this.Label_Chung.Size = new System.Drawing.Size(283, 45);
             this.Label_Chung.TabIndex = 16;
-            this.Label_Chung.Text = "Quản Lý Điểm ";
+            this.Label_Chung.Text = "Danh Sách Điểm ";
             this.Label_Chung.Click += new System.EventHandler(this.Label_Chung_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(576, 99);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(521, 404);
-            this.dataGridView1.TabIndex = 18;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // button_xoa
             // 
-            this.button_xoa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_xoa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_xoa.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_xoa.Location = new System.Drawing.Point(997, 517);
+            this.button_xoa.Location = new System.Drawing.Point(461, 322);
             this.button_xoa.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_xoa.Name = "button_xoa";
             this.button_xoa.Size = new System.Drawing.Size(100, 83);
@@ -215,10 +201,9 @@
             // 
             // button_sua
             // 
-            this.button_sua.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_sua.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_sua.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_sua.Location = new System.Drawing.Point(714, 517);
+            this.button_sua.Location = new System.Drawing.Point(178, 322);
             this.button_sua.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_sua.Name = "button_sua";
             this.button_sua.Size = new System.Drawing.Size(100, 83);
@@ -229,10 +214,9 @@
             // 
             // button_them
             // 
-            this.button_them.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_them.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_them.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_them.Location = new System.Drawing.Point(576, 517);
+            this.button_them.Location = new System.Drawing.Point(40, 322);
             this.button_them.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_them.Name = "button_them";
             this.button_them.Size = new System.Drawing.Size(100, 83);
@@ -243,10 +227,9 @@
             // 
             // button_lammoi
             // 
-            this.button_lammoi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_lammoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_lammoi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_lammoi.Location = new System.Drawing.Point(853, 517);
+            this.button_lammoi.Location = new System.Drawing.Point(317, 322);
             this.button_lammoi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_lammoi.Name = "button_lammoi";
             this.button_lammoi.Size = new System.Drawing.Size(100, 83);
@@ -255,16 +238,60 @@
             this.button_lammoi.UseVisualStyleBackColor = true;
             this.button_lammoi.Click += new System.EventHandler(this.button_lammoi_Click);
             // 
+            // label_DSSV
+            // 
+            this.label_DSSV.AutoSize = true;
+            this.label_DSSV.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_DSSV.ForeColor = System.Drawing.Color.Red;
+            this.label_DSSV.Location = new System.Drawing.Point(33, 416);
+            this.label_DSSV.Name = "label_DSSV";
+            this.label_DSSV.Size = new System.Drawing.Size(294, 41);
+            this.label_DSSV.TabIndex = 41;
+            this.label_DSSV.Text = "Danh sách sinh viên";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(43, 459);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 62;
+            this.dataGridView1.RowTemplate.Height = 28;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(1068, 128);
+            this.dataGridView1.TabIndex = 40;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick_1);
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(589, 79);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowHeadersWidth = 62;
+            this.dataGridView2.RowTemplate.Height = 28;
+            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView2.Size = new System.Drawing.Size(523, 328);
+            this.dataGridView2.TabIndex = 42;
+            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
+            // 
             // AdminDiem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 623);
+            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.label_DSSV);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button_lammoi);
             this.Controls.Add(this.button_xoa);
             this.Controls.Add(this.button_sua);
             this.Controls.Add(this.button_them);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Label_Chung);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -274,6 +301,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,11 +319,13 @@
         private System.Windows.Forms.ComboBox comboBox_Namhoc;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox_Drl;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button_xoa;
         private System.Windows.Forms.Button button_sua;
         private System.Windows.Forms.Button button_them;
         private System.Windows.Forms.Button button_lammoi;
         private System.Windows.Forms.ComboBox comboBox_hocKy;
+        private System.Windows.Forms.Label label_DSSV;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView2;
     }
 }
